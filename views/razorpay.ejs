@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Buy a book</title>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+	
+  </head>
+
+  <body>
+
+		<section class="hero is-link is-fullheight">
+			<div class="hero-body is-centered">
+				<div class="container">
+					<div class="columns is-centered is-vcentered">
+						
+						<div class="column is-6">
+							<p class="title is-size-1">Just a book</p>
+							<p class="subtitle is-size-4">You can now read this book just for ₹500</p>
+
+							<button class="button is-link is-light is-medium" id="rzp-button1">Get the book</button>
+						</div>
+					
+						<div class="column is-5">
+							<figure class="image">
+								
+								<img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1" 
+								style="border-radius: 10px" alt="">
+
+							</figure>
+						</div>
+
+					</div>
+				</div>
+			</div>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+	<script>
+		axios.post('/orders').then( (info)=>{
+		
+	var options = {
+    "key": "rzp_test_mKfiTCYyqYsuky", 
+    "name": "Book Bhandhar",
+    "description": "Simple Book Transaction",
+    "image": "https://i.pinimg.com/originals/dd/64/da/dd64da585bc57cb05e5fd4d8ce873f57.png",
+    "order_id": info.data.id,
+    "callback_url": "/is-order-complete",   // callback url
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+	
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+})
+
+	
+	</script>
+  </body>
+
+</html>
